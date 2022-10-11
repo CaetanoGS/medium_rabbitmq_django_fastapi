@@ -1,0 +1,66 @@
+{
+  "users": [
+    {
+      "name": "admin",
+      "password": "test",
+      "tags": "administrator"
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "admin",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "parameters": [],
+  "polices": [
+    {
+      "name": "ha",
+      "vhost": "/",
+      "pattern": ".*",
+      "definition": {
+        "ha-mode": "all",
+        "ha-sync-mode": "automatic",
+        "ha-sync-batch-size": 2
+      }
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "notification.exchange",
+      "vhost": "/",
+      "type": "fanout",
+      "durable": true,
+      "auto-delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "queues": [
+    {
+      "name": "notifications",
+      "vhost": "/",
+      "durable": true,
+      "auto-delete": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "notification.exchange",
+      "vhost": "/",
+      "destination": "notifications",
+      "destination-type": "queue",
+      "routing-key": "",
+      "arguments": {}
+    }
+  ]
+}
